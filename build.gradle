@@ -1,0 +1,68 @@
+plugins {
+    id 'java'
+    // ModDevGradle 2.x: plugin oficial de NeoForge para desarrollar mods.
+    // Última versión estable a junio 2026: 2.0.141 (puedes subirla si sale una nueva).
+    id 'net.neoforged.moddev' version '2.0.141'
+}
+
+group = 'com.lucerion'
+version = '1.0.0'
+base.archivesName = 'flashbackconnectorfix'
+
+java {
+    toolchain {
+        // Minecraft 1.21.1 / NeoForge 21.1.x requieren Java 21.
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+// Los archivos fuente están en UTF-8 (tienen acentos en comentarios/strings).
+// Sin esto, javac usa la codificación del sistema (windows-1252) y falla al compilar.
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+repositories {
+    mavenCentral()
+}
+
+neoForge {
+    // Debe coincidir con el NeoForge de tu instancia (CurseForge: neoforge-21.1.230).
+    version = "21.1.230"
+
+    // Parchment añade nombres de parámetros/JavaDoc (opcional pero recomendado).
+    parchment {
+        minecraftVersion = "1.21.1"
+        mappingsVersion = "2024.11.17"
+    }
+
+    // Entornos de ejecución para pruebas en el IDE (opcional).
+    runs {
+        client {
+            client()
+        }
+    }
+
+    // Declara este mod para que sus Mixins se apliquen también en el run de desarrollo.
+    mods {
+        flashbackfix {
+            sourceSet sourceSets.main
+        }
+    }
+}
+
+// NeoForge ya incluye Mixin y MixinExtras en tiempo de compilación y ejecución,
+// así que NO hace falta declararlos como dependencias aparte.
+
+tasks.named('jar') {
+    manifest {
+        attributes([
+            'Specification-Title'   : 'Flashback Connector Fix',
+            'Specification-Vendor'  : 'Lucerion',
+            'Specification-Version' : '1',
+            'Implementation-Title'  : project.name,
+            'Implementation-Version': project.version,
+            'Implementation-Vendor' : 'Lucerion'
+        ])
+    }
+}

@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.lucerion.flashbackfix.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "RegistryDataLoaderMixin",
+    "RegistryDataLoaderDiagnosticsMixin",
+    "LootDataTypeMixin",
+    "RecipeManagerMixin",
+    "ConfigValueMixin",
+    "ModConfigSpecAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

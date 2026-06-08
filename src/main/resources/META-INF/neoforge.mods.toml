@@ -1,0 +1,45 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/Sinytra/Connector/issues"
+
+[[mods]]
+modId = "flashbackfix"
+version = "1.0.0"
+displayName = "Flashback Connector Fix"
+authors = "Lucerion"
+# Permite conectarse a servidores que NO tengan este mod (es solo cliente).
+displayTest = "IGNORE_ALL_VERSION"
+description = '''
+Hace tolerante la carga de registros dinámicos cuando Flashback abre un replay en packs
+NeoForge + Sinytra Connector con muchos mods (Create y addons). Evita el crash
+"Failed to load registries due to above errors" omitiendo las entradas modded que no se
+pueden parsear, en lugar de abortar la apertura del replay.
+'''
+
+# --- Mixin ---
+[[mixins]]
+config = "flashbackfix.mixins.json"
+
+# --- Dependencias ---
+[[dependencies.flashbackfix]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.0,)"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.flashbackfix]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,1.22)"
+ordering = "NONE"
+side = "CLIENT"
+
+# Flashback es opcional como dependencia, pero si está, cargamos DESPUÉS de él.
+[[dependencies.flashbackfix]]
+modId = "flashback"
+type = "optional"
+versionRange = "*"
+ordering = "AFTER"
+side = "CLIENT"

@@ -1,0 +1,19 @@
+# Gradle / build
+.gradle/
+.gradle-bootstrap/
+build/
+out/
+run/
+runs/
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+bin/
+
+# NeoForge / ModDevGradle
+.neoform/
