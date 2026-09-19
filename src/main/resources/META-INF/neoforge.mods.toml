@@ -1,27 +1,30 @@
 modLoader = "javafml"
 loaderVersion = "[4,)"
 license = "MIT"
-issueTrackerURL = "https://github.com/Sinytra/Connector/issues"
+issueTrackerURL = ""
 
 [[mods]]
 modId = "flashbackfix"
-version = "1.0.0"
-displayName = "Flashback Connector Fix"
-authors = "Lucerion"
-# Permite conectarse a servidores que NO tengan este mod (es solo cliente).
+version = "2.3.0"
+displayName = "Flashback Fix"
+# Es un mod de cliente (Flashback graba/reproduce en el cliente). Permite conectarse a servidores
+# que NO tengan este mod (p. ej. el servidor de Create).
 displayTest = "IGNORE_ALL_VERSION"
 description = '''
-Hace tolerante la carga de registros dinámicos cuando Flashback abre un replay en packs
-NeoForge + Sinytra Connector con muchos mods (Create y addons). Evita el crash
-"Failed to load registries due to above errors" omitiendo las entradas modded que no se
-pueden parsear, en lugar de abortar la apertura del replay.
+Hace funcionar Flashback (via Sinytra Connector) en NeoForge 1.21.1 con Create, Sable/Aeronautics,
+Iris y Sodium.
+
+- Abre replays sin crashear aunque haya contenido modded que Connector no pueda re-parsear.
+- Items y bloques modded correctos: aplica al replay el mapa de IDs del servidor donde se grabo.
+- Naves de Sable/Aeronautics completas: casco, interior, piezas moviles, pasajeros sentados, y
+  movimiento correcto al avanzar y retroceder en la linea de tiempo.
+- Contraptions de Create visibles y estables al saltar en la linea de tiempo.
+- Prefijos de equipos, contenido dinamico de cretania_recipes y compatibilidad con Iris/ModernFix.
+- Tolerancia de red: un paquete de un mod que no se pueda grabar o reproducir se descarta en vez de
+  cerrar el juego o el replay.
 '''
+authors = "ChristemDc"
 
-# --- Mixin ---
-[[mixins]]
-config = "flashbackfix.mixins.json"
-
-# --- Dependencias ---
 [[dependencies.flashbackfix]]
 modId = "neoforge"
 type = "required"
@@ -32,14 +35,23 @@ side = "CLIENT"
 [[dependencies.flashbackfix]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.1,1.22)"
+versionRange = "[1.21,1.21.2)"
 ordering = "NONE"
 side = "CLIENT"
 
-# Flashback es opcional como dependencia, pero si está, cargamos DESPUÉS de él.
+[[dependencies.flashbackfix]]
+modId = "create"
+type = "optional"
+versionRange = "[6.0.0,)"
+ordering = "AFTER"
+side = "CLIENT"
+
 [[dependencies.flashbackfix]]
 modId = "flashback"
 type = "optional"
 versionRange = "*"
 ordering = "AFTER"
 side = "CLIENT"
+
+[[mixins]]
+config = "flashbackfix.mixins.json"

@@ -1,6 +1,5 @@
 # Gradle / build
 .gradle/
-.gradle-bootstrap/
 build/
 out/
 run/
@@ -17,3 +16,6 @@ bin/
 
 # NeoForge / ModDevGradle
 .neoform/
+
+# Notas internas de trabajo
+PLAN.md
